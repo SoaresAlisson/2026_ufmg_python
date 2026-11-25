@@ -1,0 +1,731 @@
+---
+title: "Exercícios — Introdução ao Python para análise de dados (população de rua de BH)"
+---
+
+## Como funcionam estes exercícios
+
+- São **21 exercícios curtos**, na mesma ordem dos slides: variáveis e tipos, operadores, estruturas de dados, condicionais, laços `for`, funções e, no fim, pandas.
+- Cada exercício traz o problema e, logo abaixo, uma célula **Sua solução** com um modelo para completar: apague os `...` e escreva o que falta.
+- Depois de escrever sua solução, **rode a célula dela** e então rode a célula **Correção automática**. Ela testa o seu código com vários valores e mostra a nota.
+- Antes de qualquer correção, rode a célula **Configuração** abaixo: sem ela, a correção falha com `NameError` em `avaliar`.
+- Regra de ouro: **não troque os nomes das variáveis** (`idade_em_meses`, `df_poprua` etc.), **não troque o nome das funções** e **não apague a primeira linha da célula**, que começa com `# EXERCICIO`. O corretor usa esses nomes para encontrar e avaliar o seu código.
+- Os valores de exemplo das células (`idade = 46`, etc.) são só para você testar à mão: o corretor **substitui** esses valores pelos casos de teste dele.
+- Ao final, escreva seu nome na célula **Seu nome** e rode a **Verificação final da entrega**.
+
+## Configuração (rode uma vez antes de corrigir)
+
+Este bloco baixa duas coisas: o **corretor automático** e a **base de dados** que usamos na parte de pandas (Cadastro Único da população de rua de Belo Horizonte).
+
+```{python setup}
+# ATENÇÃO: rode este bloco SEMPRE que abrir o notebook no Colab
+# (o Colab não guarda os arquivos baixados entre uma sessão e outra)
+import urllib.request, pathlib
+
+BASE = "https://raw.githubusercontent.com/SoaresAlisson/2026_ufmg_python/main"
+
+pathlib.Path("corretor.py").write_bytes(
+    urllib.request.urlopen(BASE + "/exercicios/corretor.py").read()
+)
+pathlib.Path("poprua_cadunico_BH.csv").write_bytes(
+    urllib.request.urlopen(BASE + "/dados/poprua_cadunico_BH.csv").read()
+)
+
+from corretor import avaliar, verificar_preenchimento_questoes
+
+print("corretor.py e poprua_cadunico_BH.csv baixados com sucesso.")
+```
+
+# Parte 1 — Variáveis, tipos e operadores
+
+## Exercício 1 — Sua primeira variável
+
+Uma linha da base da população de rua traz a **idade em anos**. Para comparar com outras bases, você precisa da mesma informação em **meses**.
+
+Crie a variável `idade_em_meses` a partir de `idade`. Guarde o resultado na variável — não use `print` para dar a resposta.
+
+| `idade` | `idade_em_meses` |
+|--------:|-----------------:|
+| 46      | 552              |
+| 27      | 324              |
+
+```{python ex1-sua-resolucao}
+# EXERCICIO 1
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+idade = 46
+
+idade_em_meses = ...
+```
+
+### Teste manual (opcional)
+
+```{python ex1-teste-manual}
+print(idade, "anos =", idade_em_meses, "meses")
+```
+
+### Correção automática
+
+```{python ex1-correcao}
+avaliar(1)   # rode antes a célula "Sua solução" aqui em cima
+```
+
+## Exercício 2 — De texto para número (e uma mensagem)
+
+Tudo o que vem de um arquivo `.csv` chega como **texto** (`str`), mesmo quando parece número. Antes de calcular, é preciso converter.
+
+Converta `idade_texto` em número inteiro, guarde em `idade` e monte em `resumo` a frase exata do exemplo, usando **f-string**:
+
+| `idade_texto` | `resumo`          |
+|---------------|-------------------|
+| `"46"`        | `Idade: 46 anos`  |
+| `"7"`         | `Idade: 7 anos`   |
+
+Dica: `int("46")` devolve o número 46; `f"..."` monta o texto com valores dentro.
+
+```{python ex2-sua-resolucao}
+# EXERCICIO 2
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+idade_texto = "46"
+
+idade = ...
+resumo = ...
+```
+
+### Teste manual (opcional)
+
+```{python ex2-teste-manual}
+print(resumo)
+print(type(idade_texto), type(idade), type(resumo))
+```
+
+### Correção automática
+
+```{python ex2-correcao}
+avaliar(2)
+```
+
+## Exercício 3 — Comparações e o operador `and`
+
+Os operadores de comparação devolvem `True` ou `False`; os operadores lógicos (`and`, `or`, `not`) combinam comparações.
+
+A política de acolhimento dá **prioridade** a quem tem **60 anos ou mais** *e* está na rua há **6 meses ou mais**. Calcule a variável `prioridade`.
+
+| idade | tempo_rua_meses | `prioridade` |
+|------:|----------------:|--------------|
+| 63    | 14              | `True`       |
+| 63    | 3               | `False`      |
+| 59    | 24              | `False`      |
+| 60    | 6               | `True`       |
+
+Atenção às bordas: 60 **entra** (`>=`), 59 não; 6 meses **entra**, 5 não.
+
+```{python ex3-sua-resolucao}
+# EXERCICIO 3
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+idade = 63
+tempo_rua_meses = 14
+
+prioridade = ...
+```
+
+### Teste manual (opcional)
+
+```{python ex3-teste-manual}
+print(idade, "anos,", tempo_rua_meses, "meses na rua -> prioridade:", prioridade)
+```
+
+### Correção automática
+
+```{python ex3-correcao}
+avaliar(3)
+```
+
+## Exercício 4 — Limpando texto com métodos de string
+
+Dados de órgãos públicos vêm "sujos": espaços sobrando, maiúsculas e minúsculas misturadas. Todo texto em Python é um objeto com **métodos** próprios.
+
+Limpe `nome_bruto` guardando em `nome_limpo`: **sem os espaços** das pontas e com **as iniciais maiúsculas**.
+
+| `nome_bruto`         | `nome_limpo`     |
+|----------------------|------------------|
+| `"  maria da silva  "` | `Maria Da Silva` |
+| `"JOSÉ  "`           | `José`           |
+
+Dica: `.strip()` tira os espaços das pontas; `.title()` põe as iniciais em maiúscula. Dá para usar os dois na mesma linha.
+
+```{python ex4-sua-resolucao}
+# EXERCICIO 4
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+nome_bruto = "  maria da silva  "
+
+nome_limpo = ...
+```
+
+### Teste manual (opcional)
+
+```{python ex4-teste-manual}
+print(repr(nome_limpo))
+```
+
+### Correção automática
+
+```{python ex4-correcao}
+avaliar(4)
+```
+
+# Parte 2 — Estruturas de dados
+
+## Exercício 5 — Listas e a média de idade
+
+Uma **lista** guarda vários valores em ordem. `len()` conta os itens, `sum()` soma e `max()` devolve o maior.
+
+Calcule a **média** das idades da lista `idades` e guarde em `media`.
+
+| `idades`              | `media` |
+|-----------------------|--------:|
+| `[46, 27, 12, 63]`    | 37.0    |
+| `[1, 2]`              | 1.5     |
+
+Dica: média é a soma dividida pela quantidade.
+
+```{python ex5-sua-resolucao}
+# EXERCICIO 5
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+idades = [46, 27, 12, 63]
+
+media = ...
+```
+
+### Teste manual (opcional)
+
+```{python ex5-teste-manual}
+print("n =", len(idades), "| mais velha:", max(idades), "| média:", media)
+```
+
+### Correção automática
+
+```{python ex5-correcao}
+avaliar(5)
+```
+
+## Exercício 6 — Dicionários: um "banco de dados" de bolso
+
+Um **dicionário** (`dict`) liga uma **chave** a um **valor**. É a estrutura ideal para traduzir categorias.
+
+A base tem a coluna `TEMPO_VIVE_NA_RUA` com faixas em texto. Para calcular, transformamos cada faixa em um número aproximado de meses — é isso que o dicionário `meses_por_faixa` abaixo já faz.
+
+Use o dicionário para obter o valor da faixa guardada em `faixa` e guarde em `meses`.
+
+| `faixa`                       | `meses` |
+|-------------------------------|--------:|
+| `"Ate seis meses"`            | 3       |
+| `"Entre dois e cinco anos"`   | 42      |
+| `"Mais de dez anos"`          | 132     |
+
+Dica: o acesso é por colchetes com a chave entre aspas: `dicionario["chave"]`.
+
+```{python ex6-sua-resolucao}
+# EXERCICIO 6
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+meses_por_faixa = {
+    "Ate seis meses": 3,
+    "Entre seis meses e um ano": 9,
+    "Entre um e dois anos": 18,
+    "Entre dois e cinco anos": 42,
+    "Entre cinco e dez anos": 90,
+    "Mais de dez anos": 132,
+}
+
+faixa = "Entre dois e cinco anos"
+
+meses = ...
+```
+
+### Teste manual (opcional)
+
+```{python ex6-teste-manual}
+print(faixa, "->", meses, "meses")
+```
+
+### Correção automática
+
+```{python ex6-correcao}
+avaliar(6)
+```
+
+# Parte 3 — Condicionais e repetição
+
+## Exercício 7 — `if` / `elif` / `else`: faixa etária
+
+O `if` decide o que fazer conforme uma condição. Com `elif` encadeamos várias possibilidades e o `else` cobre o que sobra.
+
+Classifique `idade` em `faixa_etaria`:
+
+| idade            | `faixa_etaria`        |
+|------------------|-----------------------|
+| menos de 18      | `"crianca_adolescente"` |
+| de 18 a 59       | `"adulto"`            |
+| 60 ou mais       | `"idoso"`             |
+
+As palavras da tabela vão **entre aspas**, em minúsculas e **sem acento** (é assim que o corretor compara).
+
+```{python ex7-sua-resolucao}
+# EXERCICIO 7
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+idade = 45
+
+if ...:
+    faixa_etaria = ...
+elif ...:
+    faixa_etaria = ...
+else:
+    faixa_etaria = ...
+```
+
+### Teste manual (opcional)
+
+```{python ex7-teste-manual}
+print(idade, "->", faixa_etaria)
+```
+
+### Correção automática
+
+```{python ex7-correcao}
+avaliar(7)
+```
+
+## Exercício 8 — O laço `for` com acumulador
+
+O `for` repete o mesmo bloco para cada item de uma lista. Com uma variável **acumuladora** dá para somar tudo — é o "cálculo na mão" que o pandas fará depois em uma linha.
+
+Some as idades da lista **com um laço `for`** (o enunciado pede o laço: **não use `sum()`**) e guarde a média em `media`.
+
+```{python ex8-sua-resolucao}
+# EXERCICIO 8
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+idades = [46, 27, 12, 63]
+
+soma = 0
+for idade in idades:
+    soma = ...
+
+media = ...
+```
+
+### Teste manual (opcional)
+
+```{python ex8-teste-manual}
+print("soma:", soma, "| n:", len(idades), "| média:", media)
+```
+
+### Correção automática
+
+```{python ex8-correcao}
+avaliar(8)
+```
+
+## Exercício 9 — `for` + `if`: contando casos
+
+Dentro do laço podemos **filtrar** com um `if`: contar só o que interessa.
+
+Conte quantas pessoas da lista têm **60 anos ou mais** e guarde em `quantos_idosos`.
+
+| `idades`             | `quantos_idosos` |
+|----------------------|-----------------:|
+| `[46, 27, 12, 63]`   | 1                |
+| `[60, 61, 59]`       | 2                |
+| `[12, 7]`            | 0                |
+
+Dica: comece o contador em `0` **antes** do laço e some 1 dentro do `if`.
+
+```{python ex9-sua-resolucao}
+# EXERCICIO 9
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+idades = [46, 27, 12, 63]
+
+quantos_idosos = 0
+for idade in idades:
+    if ...:
+        quantos_idosos = ...
+
+print(quantos_idosos)
+```
+
+### Teste manual (opcional)
+
+```{python ex9-teste-manual}
+print(quantos_idosos, "pessoas com 60 anos ou mais")
+```
+
+### Correção automática
+
+```{python ex9-correcao}
+avaliar(9)
+```
+
+# Parte 4 — Funções
+
+## Exercício 10 — Sua primeira função (`def` e `return`)
+
+Uma **função** dá nome a um trecho de código que pode ser reutilizado. Ela recebe argumentos e **devolve** um valor com `return` (devolver ≠ imprimir).
+
+Transforme a classificação do Exercício 7 em uma função `faixa_etaria(idade)` que **devolve** a faixa.
+
+| chamada              | resultado            |
+|----------------------|----------------------|
+| `faixa_etaria(17)`   | `"crianca_adolescente"` |
+| `faixa_etaria(18)`   | `"adulto"`           |
+| `faixa_etaria(60)`   | `"idoso"`            |
+
+```{python ex10-sua-resolucao}
+# EXERCICIO 10
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+def faixa_etaria(idade):
+    if ...:
+        return ...
+    elif ...:
+        return ...
+    else:
+        return ...
+
+
+print(faixa_etaria(45))
+```
+
+### Correção automática
+
+```{python ex10-correcao}
+avaliar(10)
+```
+
+## Exercício 11 — Função com valor padrão
+
+Um argumento pode ter **valor padrão**: quem chama a função pode omiti-lo. É assim que `read_csv` tem dezenas de opções e você usa só as que precisa.
+
+Escreva `conta_acima(idades, limite=60)`: devolve **quantas** idades da lista são **maiores ou iguais** a `limite`. Chamada só com a lista, usa o limite 60.
+
+| chamada                          | resultado |
+|----------------------------------|----------:|
+| `conta_acima([46, 27, 12, 63])`   | 1         |
+| `conta_acima([46, 27, 12, 63], 30)` | 2       |
+| `conta_acima([60, 60, 60], 60)`   | 3         |
+
+Dica: não escreva `limite` na chamada nem no lugar do argumento — só na linha `def`.
+
+```{python ex11-sua-resolucao}
+# EXERCICIO 11
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+def conta_acima(idades, limite=60):
+    quantos = 0
+    for idade in idades:
+        if ...:
+            quantos = ...
+    return ...
+
+
+print(conta_acima([46, 27, 12, 63]))
+```
+
+### Correção automática
+
+```{python ex11-correcao}
+avaliar(11)
+```
+
+# Parte 5 — pandas: importar e explorar
+
+Daqui em diante usamos a base **Cadastro Único da população de rua de Belo Horizonte** (16.639 registros, 21 colunas), publicada em <https://dados.pbh.gov.br/dataset/populacao-de-rua>. O arquivo já foi baixado na célula **Configuração**.
+
+## Exercício 12 — Importar a base com `read_csv`
+
+O pandas é a biblioteca de dados tabulares do Python. Importe com o apelido `pd` (convenção universal) e leia o arquivo `poprua_cadunico_BH.csv`, guardando o resultado em `df_poprua`.
+
+Dica: o arquivo está no mesmo diretório do notebook, então basta o nome do arquivo.
+
+```{python ex12-sua-resolucao}
+# EXERCICIO 12
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+... pandas as ...
+
+df_poprua = ...
+```
+
+### Teste manual (opcional)
+
+```{python ex12-teste-manual}
+df_poprua.head()
+```
+
+### Correção automática
+
+```{python ex12-correcao}
+avaliar(12)
+```
+
+## Exercício 13 — Quantas linhas e colunas?
+
+Antes de qualquer análise, o primeiro olhar é para o **tamanho** da base: `shape` devolve uma tupla `(linhas, colunas)`.
+
+Guarde em `dimensoes` o formato de `df_poprua` e mostre na tela.
+
+```{python ex13-sua-resolucao}
+# EXERCICIO 13
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+dimensoes = ...
+
+print(dimensoes)
+```
+
+### Teste manual (opcional)
+
+```{python ex13-teste-manual}
+print("linhas:", dimensoes[0], "| colunas:", dimensoes[1])
+```
+
+### Correção automática
+
+```{python ex13-correcao}
+avaliar(13)
+```
+
+## Exercício 14 — Selecionar uma coluna (uma `Series`)
+
+Uma coluna do DataFrame é uma **Series**: um vetor de valores com um índice em comum.
+
+Selecione a coluna **`GRAU_INSTRUCAO`** (grau de instrução) e guarde em `escolaridade`.
+
+Dica: seleção de coluna por nome usa colchetes com o nome entre aspas.
+
+```{python ex14-sua-resolucao}
+# EXERCICIO 14
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+escolaridade = df_poprua[...]
+```
+
+### Teste manual (opcional)
+
+```{python ex14-teste-manual}
+print(escolaridade.head())
+print(escolaridade.name)
+```
+
+### Correção automática
+
+```{python ex14-correcao}
+avaliar(14)
+```
+
+## Exercício 15 — Valores únicos e frequências
+
+Variáveis categóricas se entendem contando: `value_counts()` devolve, para cada valor distinto, quantas linhas ele tem — já ordenado do mais frequente para o menos.
+
+Conte quantas pessoas há em cada grau de instrução (`GRAU_INSTRUCAO`) e guarde em `contagem`.
+
+```{python ex15-sua-resolucao}
+# EXERCICIO 15
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+contagem = df_poprua[...]...()
+```
+
+### Teste manual (opcional)
+
+```{python ex15-teste-manual}
+print(contagem)
+```
+
+### Correção automática
+
+```{python ex15-correcao}
+avaliar(15)
+```
+
+# Parte 6 — pandas: filtrar, resumir e desenhar
+
+## Exercício 16 — Filtrar linhas por um valor
+
+Filtrar é passar uma **condição** para o DataFrame: o pandas devolve só as linhas em que ela é `True`.
+
+Filtre as pessoas com **mais de 60 anos** (`IDADE > 60`) e guarde o resultado em `df_60mais`.
+
+```{python ex16-sua-resolucao}
+# EXERCICIO 16
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+df_60mais = ...
+```
+
+### Teste manual (opcional)
+
+```{python ex16-teste-manual}
+print(df_60mais.shape)
+print(df_60mais["IDADE"].min())
+```
+
+### Correção automática
+
+```{python ex16-correcao}
+avaliar(16)
+```
+
+## Exercício 17 — Duas condições com `query`
+
+O método `query()` escreve o filtro como uma **frase**, o que fica mais legível quando há mais de uma condição.
+
+Filtre as **mulheres com deficiência**, isto é, `SEXO` igual a `"FEMININO"` **e** `PcD` igual a `"SIM"`, e guarde em `df_filtro`. Use `query` com as duas condições unidas por `and`.
+
+```{python ex17-sua-resolucao}
+# EXERCICIO 17
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+df_filtro = df_poprua.query('...')
+```
+
+### Teste manual (opcional)
+
+```{python ex17-teste-manual}
+print(df_filtro.shape)
+```
+
+### Correção automática
+
+```{python ex17-correcao}
+avaliar(17)
+```
+
+## Exercício 18 — Resumo estatístico com `describe`
+
+`describe()` resume uma coluna numérica: contagem, média, desvio padrão, mínimo, quartis e máximo — o primeiro retrato de uma variável.
+
+Guarde em `resumo` o resumo da coluna `IDADE`.
+
+```{python ex18-sua-resolucao}
+# EXERCICIO 18
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+resumo = ...
+```
+
+### Teste manual (opcional)
+
+```{python ex18-teste-manual}
+print(resumo)
+```
+
+### Correção automática
+
+```{python ex18-correcao}
+avaliar(18)
+```
+
+## Exercício 19 — Agrupar e contar com `groupby`
+
+`groupby` junta as linhas que têm o mesmo valor numa coluna (o "split"), aplica um cálculo em cada grupo (o "apply") e devolve um resultado por grupo (o "combine").
+
+Conte **quantos registros há em cada regional** (`REGIONAL`) e guarde em `por_regional`.
+
+Dica: `groupby("coluna").size()` devolve a contagem de cada grupo.
+
+```{python ex19-sua-resolucao}
+# EXERCICIO 19
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+por_regional = ...
+```
+
+### Teste manual (opcional)
+
+```{python ex19-teste-manual}
+print(por_regional.sort_values(ascending=False))
+```
+
+### Correção automática
+
+```{python ex19-correcao}
+avaliar(19)
+```
+
+## Exercício 20 — `groupby` com uma estatística
+
+Depois de agrupar, escolhemos a coluna e a estatística: média, mediana, contagem, soma...
+
+Calcule a **idade média das pessoas de cada cor/raça** (`COR_RACA`) e guarde em `idade_media_cor`.
+
+```{python ex20-sua-resolucao}
+# EXERCICIO 20
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+idade_media_cor = ...
+```
+
+### Teste manual (opcional)
+
+```{python ex20-teste-manual}
+print(idade_media_cor.sort_values())
+```
+
+### Correção automática
+
+```{python ex20-correcao}
+avaliar(20)
+```
+
+## Exercício 21 — Um primeiro gráfico
+
+O pandas desenha direto do DataFrame: `.plot.hist` já devolve um objeto de eixos (`Axes`), que guardamos em `ax` para poder ajustar depois. Título, eixos e cores são opções do próprio `.plot`: `title=`, `xlabel=`, `ylabel=`, `grid=`, `color=`.
+
+Desenhe um **histograma** da coluna `IDADE` com 20 faixas (bins) e guarde o resultado em `ax`.
+
+```{python ex21-sua-resolucao}
+# EXERCICIO 21
+# (mantenha a linha acima: o corretor a utiliza para achar o seu código)
+
+ax = ...
+```
+
+### Teste manual (opcional)
+
+```{python ex21-teste-manual}
+print(type(ax))
+print("barras desenhadas:", len(ax.patches))
+```
+
+### Correção automática
+
+```{python ex21-correcao}
+avaliar(21)
+```
+
+# Entrega
+
+## Seu nome
+
+Antes de entregar, preencha a célula abaixo com o seu nome completo e **rode-a** — a verificação final usa essa informação.
+
+```{python seu-nome}
+# MEU NOME
+# (mantenha a linha acima e preencha a de baixo, entre aspas)
+
+meu_nome = "..."   # <- escreva aqui entre aspas, ex.: "Maria Silva"
+```
+
+## Verificação final da entrega
+
+```{python verificacao-final}
+verificar_preenchimento_questoes()   # confere os 21 exercícios e se você preencheu o nome
+```
+
+Pronto: salve o notebook (ctrl+s) e baixe o `.ipynb` se quiser guardar as suas soluções.
