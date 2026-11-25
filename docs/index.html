@@ -646,6 +646,21 @@ margin-top: 1.2em;
 .reveal .slides section {
 text-align: left;
 }
+
+.reveal #title-slide::after {
+content: "Aponte a câmera\Asoaresalisson.github.io/2026_ufmg_python";
+white-space: pre-line;
+position: absolute;
+bottom: 2.6em;
+right: 2.4em;
+width: 150px;
+padding-top: 156px;
+background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAAC7ElEQVR4nO2cTYrjMBCF3xsJZilDHyBHsW82Z+obWEfJAQasZUCmZlGS7MwwCQ1uY0HVwsTJtygo6l8KBV+R+ONLOGC88cZ/K59YZAIAJK8PclhJDkD93V9Tf+Pf8E5ERDRQk7cMxFsGxgX1ISIiy1n6GH8c7wEABFwG0kfG+Okzx7vPEgmU7JwGYPw8Qx/jj+X909tKAIAAGURYwHE+Vx/jj+Wf7esy4+1RjZwIicNyqj7GfwcvIhnqv+P9p+hrvIlo/kUQkflEfYw/kl+1PAbgSpE1pZ/CX3cPTskDkdRK+pr6G/9/8UBoI45UUq9KHNDS8Wn6GH84n3zpcKfwIKdEAuFBmYMIYut/p7P0Mf5AHrX1dZp1ZQ65pWMnamSE9no1/Y1/IyKLk22WUcYYIeun+nCiQw6zb2e8Gk+luW71X0BmbNY3/+2P3/W/BDwIOCHgBHFymaOslDi0wutq+hv/RkpARovFmoRFMO4+1RRt/tsfr8MLJ5wAlDY3kTInD4x3sqDB/LdLPnlgXFaWCRWcALVqLl0R6ibpivob/0K89roI2XP8BARYfX04IUL2ZZOUPvL19Df+jZTaubZBMoestXLtfzOs/+2X39VX+jrDSe2KnBZZGrOt/+2RfxpeqK/K3nXHBdgSs9m3N77MJ8c6tdoWgtoVjVInWbPZt0N+7786ulqc7nprOm6WtvlVh3ydT1Yja8LVgUbI7WhdsbTZtzf+Of9uAbk68a6cNvt2yJf5c6TLBHyWcohjpQD6nW765Rx9jD+c37ZGy0o97t6mVlv01pM6V9Tf+Fey6381NNfUq4Ebu07Y4nOffLu/oGfpSsgmbw+WJIyV5Ycr6m/8C/nLTWs7XHf+2/bQ+t/++ZWIw0rEW10dxVuZb9j5ui55/8835f5gFqQBdYnUjsheTX/jX4vat5gvZE+E3x4Ii559JkC9qQK9iXQ1/Y1/z7f7C8m3XcJKXSJhuzNq9xc65Gn/z2C88d3yfwAeAyY5gL0jSQAAAABJRU5ErkJggg==) top center / contain no-repeat;
+font-size: .52em;
+color: #666;
+text-align: center;
+line-height: 1.4;
+}
 .reveal #title-slide,
 .reveal section.title-slide.slide.level1,
 .reveal .pausa,
@@ -1693,14 +1708,15 @@ display:block!important;
 <p>Depois de abrir: <code>File → Save a copy in Drive</code> (assim suas respostas não se perdem).</p>
 <p>Se o notebook não abrir, o link provavelmente ainda não foi publicado — use a opção 2 e me chame.</p>
 </section>
-<section id="qr-code-do-notebook" class="slide level2 center">
-<h2>QR code do notebook</h2>
+<section id="qr-code-do-notebook-visibilityhidden" class="slide level2 center">
+<h2>QR code do notebook {visibility=“hidden”}`</h2>
 <div class="center">
-<p><img role="img" data-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0AQMAAADxGE3JAAAABlBMVEX///8AAABVwtN+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAD6ElEQVR4nO2dS7KjMAxFRTHIkCWwFJaGl8ZSWALDDCjUtn42dHXPHa4q9fKCOcrolj6WCXHYl4qNzGd5ny+ay1WamA8qix9On3JlGyuTV8CD75k/SG390irXNvWSTVzk9Yl1Xf1nflNkAA++f16FsDb6WRS+8meVUOGZU/BDYXbw4H+JNxduwlv8YAkeISHw4H+Pz7ZK8lT005iGmE/Rz8L/1x948L3xaqGfAp8hItb4IZVDltCm+tE18OBfz4cJn/W3yGu+tAQvsPBJXtv4n/odPPje+IetLPXHGf0nbvXzvPtvAw++Kz6EUEivPzKfg0POr3ZS/Zi4viau5TJ9gQffN19N6utV3Z0iHuu/PuoPM2/OggffMc9NfzVb8uRIxVO81PjB7PlTVQ548K/mvYWVPMVaZAtvVi+N+HT/+pQtjiZ+gQffMR+m+uHo3/qiiKusaH/Km0/q/wAPvnc+v9u9H9u8ziFiH9Rfq68UUaTuX4AH3zmvW9SrrCRqhpek/0r2FUb6/NJcgktIDDz4PvlysSmxtfm6VOe3+lv2H1iaU9z0r8CDfy0f8x8aYsj0tw8aguKWRLf8iwbTH3jwHfPFJP6QwCt7fXGJSowv1uRfzNacOsCD75uf6rVEbtFi8hI7Dkc8+6/gwXfO2z9RXDf9p9kkouuJPH7U/Ak8+J55qw9kRKPcMtoWw04xv3fLn9xmrvkXePAv58n0l++K/pXnX9Wa/Iu5nr8AD75X3oLLdBt+KjZYCNL9uyb/Ypn/i/obPPiO+SihE1n82Mjmv8XKkhfn5MMdiyZnF3jwP8CT508k9cVo86+782o+/202qGfw4HvmSc83xHzGaSX2zLb/MHmX9pE8kZ7/BA/+zTz7fBP7+VEam1tu+Vf6WHBarkf9DR58t3z8zTw1803iovw9bPMukcWfpe5fgAffM09RgqhE7vWHPz+A9XzEvf/KXL8cPPguefMymT7WmP9ubjns+avFztvDmcCD75w/TBAr1/rB7Dn/HfmTFt+7iw88+Bfz3OxPrzL/TaMVH0LSVJ+/VD3/df4UPPhe+Zp/kcWXmP/2+cAUR0xjncCD75xvTdc3r7Ln8sm+4lvnv/M6Deb/AA++a74qQkc0mvgx2/xe65x1BHyo+gMPvmc+6odvnV9dmvkNjS/Rfw390G1+Azz4t/JFVPr7D1y3KIhuI1Bcnz+jttt8IHjwP8N/b7//sDfnp71/u40+H0t1fgM8+J/gVRqntVh3uckPz6mE1PM9/wIPvmdebfX4sMnH+bJdBjH62Pm4zQ8HNf1X8OD75cNcPxYiXCKTPb9ev2KJ+aV/1O/gwb+I/wPWw/2gkGmM2gAAAABJRU5ErkJggg==" style="width:34.0%"></p>
+<p><img role="img" data-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeoAAAHqAQAAAADjFjCXAAAEgUlEQVR4nO2dS46rSgyGf99CyrDYQZYCOzvqnYWl9AJagmFLoP8OXHYVOTPoexPU9iDKg08pJMsuP8oIcUKmf87QQOCBBx74/4YvUmTEJpj6TUT6Tb8CAMiITWQEACwd7PLuHRYf+FXxRJIkgNT622GuHxMxSQdM9xUYSJLzD/174L8VL5YLALDcyMdyI6b7ChkB8KPfBMPs0CJm+t5h8YFfHN8EyCvkzwzwsXTlO1W4vKqH/c/+PfDfgu+VKBHDp4DACgxzL5gkUZC/gEl+/t8D/804ybV4Trmz7OamPun2TR3uMPt1meTjbRYf+CXxGq8mYvjsIOPSqZuVEdB3ABJlXDpgEhGR/j0WH/gFcfBJHgDIObF94YoStFrAWy6+9L0H/kJ86aBZunERATKp+boRm5o0jXCn+wo+8rdg6t9n8YFfEVdbh2FO5COvsKSdb+ky3dal5l0hLn3vgb8KR1UuoHlx/ctr44Q1kKhKGFoX+CHRsHQgqXbt4ZpIL0EMcyIGrtBfy0toXeBHRf2lhq8zYMqVaJpoH0sgUYxgRBOBn5DiYWHxqtow/1mzdL7rU53MjH1d4GekxAa7TVt5NxetU117criaKr70vQf+anzptPAq0hdfK2M2u6btJtLpdwAA8jM6nQI/hfORv0X+8NtqrUtprcMknUW4KkmbUUqY+w6LD/xyuOfr2mjWuppKWs52c6tnWMq78LCBHxPTNVM4IFnkmmtumKwhRVMbC60L/JBYlnhFkxbxzImlisk2zM2uhJe+98BfhaPW/ItLNbtWm4dLvi6XLLGZw/CwgZ/AN5HRC68f4u3pZtxKWcyrr+phl4hhAz+Be6pEO9hJAJvwo/fvFtHDY5j6fc/d6xcf+AXxXd/c7GWJzKbxpIhXJGqVNjxs4Ifkr5ZNO49YFW5X83csoonAD4vVYV2RANTIodg1S5+UDEv01wV+TtTWldK++1UPZGFlidoWUJvxQusCPyZNt+bDMiKl5r9vfHpqhgoPG/hh6QBsHbB0qyB/CQGAwNpxuhOWJf4SYum1NstJEjGN6eWLD/yieKcnDote3ej6BwG6VYC0il6WCQBrh4GbEHl++eIDvyhudVgv8tM6iK0PwOsQefX0ScSwgZ+StqrvUSqeOti98Ort7nFuIvATUlN1pWWutpvQP+7qsCXgiCxx4IfFLJy3p7uFU3XM+8kAT70pl773wF+Fo83NYZ8lzj4hcZ8+QZzWCfyc7A4b+pZuV30trXWkH8qOfF3gJ/HlphZORG5sCmRq9Xx04iQi5Gen15VhJy9ffOBXxHcznazw0ESpz3XY/bCnsHWBH8TrDHbzphjstJiMSLQZ7JuoTdRhT/c4Ixb4UdkZMneu2fd6Na+C1Nq6yNcFflzaOSceL+x76TSRN8ztKIro6gz8hDxN13lqQbGGOjQFCms8Ca0L/KjsbF1NAdf5YdyFD/YglPCwgZ/FG12b+jq1046MiT7vZNOhFG299h0WH/jl8OZ4RH2YifWXWFls8IPaMXEi8B/AJZ7UGXjggf8C/F9qbMNmm9ALTwAAAABJRU5ErkJggg==" style="width:34.0%"></p>
 </div>
 <div class="center">
 <p>Aponte a câmera do celular</p>
 </div>
+<!-- <https://raw.githubusercontent.com/SoaresAlisson/2026_ufmg_python/refs/heads/main/dados/poprua_cadunico_BH.csv> -->
 <aside class="notes">
 <p>Deixar este slide no ar enquanto todo mundo abre o notebook. Se a rede do evento for ruim, ter um plano B: baixar o .ipynb e usar “Upload” no Colab.</p>
 <style type="text/css">
@@ -1714,6 +1730,11 @@ width: 1px!important;
 overflow: hidden!important;
 display:block!important;
 }</style></aside>
+</section>
+<section id="exercícios" class="slide level2 center">
+<h2>Exercícios</h2>
+<p>Exercício para fazer no Colab com autocorreção</p>
+<p><a href="https://github.com/SoaresAlisson/2026_ufmg_python/blob/main/exercicios/exercicio_python.ipynb" class="uri">https://github.com/SoaresAlisson/2026_ufmg_python/blob/main/exercicios/exercicio_python.ipynb</a></p>
 </section>
 <section id="anatomia-da-tela-do-colab" class="slide level2 center">
 <h2>Anatomia da tela do Colab</h2>
@@ -4365,7 +4386,8 @@ display:block!important;
 <section id="obrigado" class="slide level2 center">
 <h2>Obrigado!</h2>
 <ul>
-<li>Slides e notebook: <a href="https://github.com/SoaresAlisson/2026_ufmg_python" class="uri">https://github.com/SoaresAlisson/2026_ufmg_python</a></li>
+<li>Slides: <a href="https://soaresalisson.github.io/2026_ufmg_python/" class="uri">https://soaresalisson.github.io/2026_ufmg_python/</a> (também na capa, no QR)</li>
+<li>Mais slides: Aulas Fundaj: <a href="https://soaresalisson.github.io/fundaj_2026_pyhton_aula01/">Introdução Python</a> <a href="https://soaresalisson.github.io/fundaj_python_pandas/">Pandas</a> <!-- - Notebook (no Colab): `colab.research.google.com/github/SoaresAlisson/2026_ufmg_python` --></li>
 <li>Contatos:
 <ul>
 <li>e-mail: <a href="mailto:alissoares@ufmg.br" class="email">alissoares@ufmg.br</a></li>
